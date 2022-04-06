@@ -1,0 +1,6 @@
+-rewrite fetching of user with SWR
+-rewrite global and home.module styles with stitches/styled
+-correct pages to make more sense on the router (/home/login, etc)
+-add some animation effects
+-see if improvements can be made to mobile view of agenda
+-make sure if there's no token, user is redirected 
