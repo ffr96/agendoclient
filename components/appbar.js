@@ -1,25 +1,25 @@
-import Link from "next/link";
-import useAuthStorage from "../lib/useAuthStorage";
-import { Box } from "./basics/Box";
-import { LinkText } from "./basics/Text";
-import { Button } from "./basics/Button";
-import { Separator } from "./separator";
+import Link from 'next/link';
+import useAuthStorage from '../lib/useAuthStorage';
+import { Box } from './basics/Box';
+import { LinkText } from './basics/Text';
+import { Button } from './basics/Button';
+import { Separator } from './separator';
 
-import Image from "next/image";
+import Image from 'next/image';
 import HRLogo from '../public/hrlogo.png';
-import { styled, keyframes } from "../stitches.config";
-import Router, { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { styled, keyframes } from '../stitches.config';
+import Router, { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const fadeIn = keyframes({
-  'from': {
+  from: {
     opacity: 0,
-    boxShadow: '0px 0px 0em $$green'
+    boxShadow: '0px 0px 0em $$green',
   },
-  'to': {
+  to: {
     opacity: 1,
     boxShadow: '0px 0px 2em $$green',
-  }
+  },
 });
 
 const AppContainer = styled('div', {
@@ -41,32 +41,32 @@ const AppContainer = styled('div', {
     },
     '& #tag': {
       width: '100%',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     '& #end': {
       width: '100%',
       background: '$white',
-      justifyContent: 'center'
-    }
-  }
+      justifyContent: 'center',
+    },
+  },
 });
 
-const CenteredLinkText = ({children, active}) => {
-  return(
+const CenteredLinkText = ({ children, active }) => {
+  return (
     <LinkText
       css={{
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
-        width: '25%', 
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '25%',
         height: '100%',
         fontWeight: 'bold',
-      }}>
-        {children}
+      }}
+    >
+      {children}
     </LinkText>
   );
 };
-
 
 const AppBar = () => {
   const router = useRouter();
@@ -75,47 +75,74 @@ const AppBar = () => {
   const [userLogged, SetUserLogged] = useState(null);
   const [active, SetActive] = useState(null);
   const path = router.pathname;
-  
+
   useEffect(() => {
     if (!userLogged) {
       SetUserLogged(user);
     }
-    SetActive(path);    
+    SetActive(path);
   }, [path, userLogged, user]);
 
   console.log(active);
 
   return (
     <AppContainer>
-      <Box id="tag" css={{width: '25%', justifyContent: 'flex-start'}}>
-        <Box style={{paddingInline: 5}}>
-          <Image 
-            layout="intrinsic"
-            alt="hrlogo"
-            quality={100} 
+      <Box id='tag' css={{ width: '25%', justifyContent: 'flex-start' }}>
+        <Box style={{ paddingInline: 5 }}>
+          <Image
+            layout='intrinsic'
+            alt='hrlogo'
+            quality={100}
             width={20}
-            height={20} 
+            height={20}
             src={HRLogo}
           />
         </Box>
-        Dr. Humberto Gustavo Rosetti
+        Dr. Name Surname
       </Box>
-      <Box css={{width: '50%', height: '100%', justifyContent: 'space-evenly', textAlign:'center'}}>
-        <CenteredLinkText active={active === '/'}><Link href={'/'}>Experiencia</Link></CenteredLinkText>
-        <Separator orientation='vertical' decorative/>
-        <CenteredLinkText active={active === '/about'}><Link href={'/about'}>Contacto</Link></CenteredLinkText>
-        <Separator orientation='vertical' decorative/>
-        <CenteredLinkText active={active === '/more'}><Link href={'/home/more'}>Mas Información</Link></CenteredLinkText>
+      <Box
+        css={{
+          width: '50%',
+          height: '100%',
+          justifyContent: 'space-evenly',
+          textAlign: 'center',
+        }}
+      >
+        <CenteredLinkText active={active === '/'}>
+          <Link href={'/'}>Experiencia</Link>
+        </CenteredLinkText>
+        <Separator orientation='vertical' decorative />
+        <CenteredLinkText active={active === '/about'}>
+          <Link href={'/about'}>Contacto</Link>
+        </CenteredLinkText>
+        <Separator orientation='vertical' decorative />
+        <CenteredLinkText active={active === '/more'}>
+          <Link href={'/home/more'}>Mas Información</Link>
+        </CenteredLinkText>
       </Box>
-      <Box id="end" css={{width: '25%', justifyContent:'flex-end', alignContent:'center'}}>
-          {
-            userLogged &&
-            <Link href={'/agenda'} passHref><Button>Agenda</Button></Link>
-          }
-          {
-            userLogged &&
-            <Button onClick={()=>{storage.removeAccessToken(); Router.push('/');}}>Desconectarse</Button>
-          }
+      <Box
+        id='end'
+        css={{
+          width: '25%',
+          justifyContent: 'flex-end',
+          alignContent: 'center',
+        }}
+      >
+        {userLogged && (
+          <Link href={'/agenda'} passHref>
+            <Button>Agenda</Button>
+          </Link>
+        )}
+        {userLogged && (
+          <Button
+            onClick={() => {
+              storage.removeAccessToken();
+              Router.push('/');
+            }}
+          >
+            Desconectarse
+          </Button>
+        )}
       </Box>
     </AppContainer>
   );

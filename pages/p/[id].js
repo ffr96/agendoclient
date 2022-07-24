@@ -4,6 +4,10 @@ import Layout from "../../components/layout";
 import { useUser } from "../../lib/useUser";
 import { url } from "../../utils/url";
 
+/**
+ * Rewrite with getStaticProps
+ */
+
 
 export default function PatientInfo () {
   const router = useRouter();
